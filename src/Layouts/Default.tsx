@@ -1,11 +1,20 @@
-import { Container, Box } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 const DefaultLayout = ({
   children,
 }: React.PropsWithChildren<React.ReactNode>): JSX.Element => (
-  <Container maxWidth="sm">
-    <Box my={4}>{children}</Box>
-  </Container>
+  <Grid
+    container
+    spacing={0}
+    direction="column"
+    alignItems="center"
+    justify="center"
+    style={{ minHeight: '100vh' }}
+  >
+    <Grid item md={12}>
+      {children}
+    </Grid>
+  </Grid>
 )
 
 export default DefaultLayout

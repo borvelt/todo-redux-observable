@@ -15,3 +15,5 @@ export const onLocationChanged = (
   },
 })
 onLocationChanged.getType = () => LOCATION_CHANGE
+
+export { onLocationChanged as changeRoute }

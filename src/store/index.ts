@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import createReducers from './root-reducers'
 import { createMiddlewares, bootstrapEpics } from './root-middlewares'
 import { isProd } from '../utils'
+export type { History } from 'history'
 
 export type RootState = StateType<ReturnType<typeof store.getState>>
 

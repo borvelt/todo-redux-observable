@@ -11,16 +11,16 @@ import { Provider } from 'react-redux'
 function Index(): JSX.Element {
   const store = useStore({})
   return (
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <React.StrictMode>
             <App />
-          </ConnectedRouter>
-        </Provider>
-      </ThemeProvider>
-    </React.StrictMode>
+          </React.StrictMode>
+        </ConnectedRouter>
+      </Provider>
+    </ThemeProvider>
   )
 }
 
