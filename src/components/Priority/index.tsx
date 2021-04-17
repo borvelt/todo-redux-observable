@@ -2,12 +2,12 @@ import { Badge, makeStyles, Typography } from '@material-ui/core'
 import { PriorityComponentProps } from './types'
 
 const colorsPriority: Array<'error' | 'secondary' | 'primary'> = [
-  'error',
-  'secondary',
   'primary',
+  'secondary',
+  'error',
 ]
 
-const textPriority: Array<'High' | 'Medium' | 'Low'> = ['High', 'Medium', 'Low']
+const textPriority: Array<'High' | 'Medium' | 'Low'> = ['Low', 'Medium', 'High']
 
 const useStyle = makeStyles((theme) => ({
   priorityName: {

@@ -3,6 +3,7 @@ import {
   ToDoContainer,
   AddToDoFormContainer,
   ViewToDoContainer,
+  ViewDoneToDoListContainer,
 } from './containers/ToDo'
 
 const Routes = () => {
@@ -18,6 +19,7 @@ const Routes = () => {
         <>
           <Route path="/add-todo" children={<AddToDoFormContainer />} />
           <Route path="/view-todo/:todoId" children={<ViewToDoContainer />} />
+          <Route path="/done-todos" children={<ViewDoneToDoListContainer />} />
         </>
       )}
     </>

@@ -24,3 +24,5 @@ export type FetchToDoListRequest = undefined
 export type AddToDoRequest = Omit<TODO, 'isDone' | 'id'>
 
 export type PersistTodoListRequest = undefined
+
+export type DoneTodoRequest = Pick<TODO, 'id' | 'isDone'>

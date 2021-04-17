@@ -9,6 +9,7 @@ import {
   addTodo as addTodoAction,
   fetchToDoList as fetchToDoListAction,
   persistTodoList as persistTodoListAction,
+  doneTodo as doneTodoAction,
 } from './actions'
 import { changeRoute } from '../../store/router-actions'
 import { TODO_STORAGE_KEY } from './constants'
@@ -100,7 +101,7 @@ export const dispatchPersistTodoListAction: Epic<
   GlobalServices
 > = (action$, _state$) =>
   action$.pipe(
-    filter(isActionOf(addTodoAction.success)),
+    filter(isActionOf([addTodoAction.success, doneTodoAction])),
     map(({ payload }) => persistTodoListAction.request())
   )
 

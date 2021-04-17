@@ -1,3 +1,4 @@
+import { filter } from 'ramda'
 import { createSelector } from 'reselect'
 
 import { RootState } from '../../store'
@@ -22,4 +23,12 @@ export const toDoDraftSelector = createSelector(
 export const toDoDraftErrorSelector = createSelector(
   toDoDraftRootSelector,
   (state) => state.error
+)
+
+export const doingTodosSelector = createSelector(todoListSelector, (state) =>
+  filter((x) => !x.isDone, state || [])
+)
+
+export const doneTodoSelector = createSelector(todoListSelector, (state) =>
+  filter((x) => x.isDone, state || [])
 )
