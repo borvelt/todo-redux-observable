@@ -10,6 +10,7 @@ import {
   fetchToDoList as fetchToDoListAction,
   persistTodoList as persistTodoListAction,
   doneTodo as doneTodoAction,
+  editTodo as editTodoAction,
 } from './actions'
 import { changeRoute } from '../../store/router-actions'
 import { TODO_STORAGE_KEY } from './constants'
@@ -82,9 +83,9 @@ export const closeAddToDoModal: Epic<
   ActionType<typeof History>,
   RootState,
   GlobalServices
-> = (action$, _state$, { todo }) =>
+> = (action$, _state$) =>
   action$.pipe(
-    filter(isActionOf(addTodoAction.success)),
+    filter(isActionOf([addTodoAction.success, editTodoAction.success])),
     map(() => {
       return changeRoute(
         //@ts-ignore
@@ -101,8 +102,14 @@ export const dispatchPersistTodoListAction: Epic<
   GlobalServices
 > = (action$, _state$) =>
   action$.pipe(
-    filter(isActionOf([addTodoAction.success, doneTodoAction])),
-    map(({ payload }) => persistTodoListAction.request())
+    filter(
+      isActionOf([
+        addTodoAction.success,
+        doneTodoAction,
+        editTodoAction.success,
+      ])
+    ),
+    map(() => persistTodoListAction.request())
   )
 
 export const persistTodoList: Epic<
@@ -142,4 +149,29 @@ export const persistTodoList: Epic<
           }
         })
     )
+  )
+
+export const validateEditToDo: Epic<
+  RootAction,
+  ActionType<typeof editTodoAction>,
+  RootState,
+  GlobalServices
+> = (action$, _state$, { todo }) =>
+  action$.pipe(
+    filter(isActionOf(editTodoAction.request)),
+    map(todo.validateRequest),
+    map((validation) => {
+      if (validation.error) {
+        return editTodoAction.failure({
+          data: validation.data,
+          error: validation.error,
+          message: validation.message,
+        })
+      }
+      return editTodoAction.success({
+        data: validation.data,
+        message: validation.message,
+        error: null,
+      })
+    })
   )

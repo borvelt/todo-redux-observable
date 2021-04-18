@@ -4,11 +4,18 @@ import { TodoItemProps } from './types'
 const TodoItem = ({ item }: TodoItemProps) => {
   return (
     <Box component="div" width={1}>
-      <Typography> {item.title} </Typography>
-      <Typography> {item.description} </Typography>
-      <Typography> {item.gift} </Typography>
+      <Typography align="right">
+        <PriorityComponent number={item.priority || 0} />
+      </Typography>
+
       <Typography>
-        <PriorityComponent number={item.priority} />
+        <strong>Title:</strong> {item.title}
+      </Typography>
+      <Typography>
+        <strong>Description:</strong> {item.description}
+      </Typography>
+      <Typography>
+        <strong>KPIs:</strong> {item.gift}
       </Typography>
     </Box>
   )

@@ -2,7 +2,7 @@ import { matchPath } from 'react-router'
 import { ActionType } from 'typesafe-actions'
 import { ValidationResponse } from '../../types/Response'
 import RouterStateType from '../../types/RouterState'
-import { addTodo as addTodoAction } from './actions'
+import { addTodo as addTodoAction, editTodo as editTodoAction } from './actions'
 import { AddToDoRequest } from './types'
 
 const validateProps = (props: AddToDoRequest): ValidationResponse => {
@@ -25,7 +25,9 @@ const validateProps = (props: AddToDoRequest): ValidationResponse => {
 }
 
 export const validateRequest = (
-  action: ActionType<typeof addTodoAction.request>
+  action: ActionType<
+    typeof addTodoAction.request | typeof editTodoAction.request
+  >
 ): ReturnType<typeof validateProps> => {
   return validateProps(action.payload)
 }

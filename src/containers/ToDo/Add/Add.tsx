@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router'
-import { AddToDoFormComponentTypes } from '.'
-import AddToDoModal from '../../../components/AddToDoModal'
+import { AddToDoFormComponentTypes } from './index'
+import AddToDoModal from '../../../components/AddEditToDoModal'
 import { AddToDoRequest } from '../types'
 
 const AddToDoFormComponent = ({

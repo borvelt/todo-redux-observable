@@ -11,6 +11,7 @@ const toDoListReducers = createReducer<
     | typeof actions.fetchToDoList
     | typeof actions.addTodo
     | typeof actions.doneTodo
+    | typeof actions.editTodo
   >
 >(toDoListInitialState)
 
@@ -46,10 +47,24 @@ export const todoList = toDoListReducers
       }
     })
   )
+  .handleAction(actions.editTodo.success, (state, { payload }) =>
+    produce(state, (draft) => {
+      const currentTodoIndex = findIndex(propEq('id', payload.data.id))(
+        state.payload || []
+      )
+      if (draft.payload?.[currentTodoIndex]) {
+        draft.payload[currentTodoIndex] = payload.data
+      }
+    })
+  )
 
 const todoDraftReducers = createReducer<
   ToDoDraftStateShape,
-  ActionType<typeof actions.addTodo>
+  ActionType<
+    | typeof actions.addTodo
+    | typeof actions.addTodoDraft
+    | typeof actions.editTodo
+  >
 >(toDoDraftInitialState)
 
 export const todoDraft = todoDraftReducers
@@ -61,17 +76,24 @@ export const todoDraft = todoDraftReducers
     })
   )
   // cleaning draft state.
-  .handleAction(actions.addTodo.success, (state) =>
+  .handleAction([actions.addTodo.success, actions.editTodo.success], (state) =>
     produce(state, (draft) => {
       draft.error = null
       draft.message = ''
       draft.payload = null
     })
   )
-  .handleAction(actions.addTodo.failure, (state, { payload }) =>
+  .handleAction(
+    [actions.addTodo.failure, actions.editTodo.failure],
+    (state, { payload }) =>
+      produce(state, (draft) => {
+        draft.error = payload.error
+        draft.message = payload.message
+        draft.payload = state.payload
+      })
+  )
+  .handleAction(actions.addTodoDraft, (state, { payload }) =>
     produce(state, (draft) => {
-      draft.error = payload.error
-      draft.message = payload.message
-      draft.payload = state.payload
+      draft.payload = { ...payload }
     })
   )

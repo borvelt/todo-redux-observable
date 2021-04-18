@@ -1,12 +1,19 @@
-import { Button, Card, CardContent } from '@material-ui/core'
+import { Box, Button, Card, CardContent, makeStyles } from '@material-ui/core'
 import { useHistory, useLocation } from 'react-router-dom'
 import TodoItem from '../TodoItem'
 import { TodoItemProps } from './types'
+const useStyle = makeStyles(() => ({
+  cardActionBody: {
+    width: '50vw',
+  },
+}))
 const TodoItemWithAction = ({ item, setDone }: TodoItemProps) => {
+  const classes = useStyle()
   const history = useHistory()
   const location = useLocation()
   return (
     <Card
+      className={classes.cardActionBody}
       onClick={(e) => {
         e.preventDefault()
         history.push({
@@ -17,21 +24,27 @@ const TodoItemWithAction = ({ item, setDone }: TodoItemProps) => {
     >
       <CardContent>
         <TodoItem item={item} />
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-            setDone({ id: item.id, isDone: true })
-          }}
-        >
-          Done
-        </Button>
+        <Box display="flex" justifyContent="flex-end">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              history.push({
+                pathname: `/edit-todo/${item.id}`,
+                state: { background: location },
+              })
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setDone({ id: item.id, isDone: true })
+            }}
+          >
+            Done
+          </Button>
+        </Box>
       </CardContent>
     </Card>
   )

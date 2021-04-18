@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  Grid,
   Radio,
   RadioGroup,
   TextField,
@@ -19,43 +20,60 @@ const AddToDoModal = ({
   draft,
   errors,
   submitTodoForm,
+  title,
 }: AddToDoModalProps) => {
   const [priority, setPriority] = useState<Priority>(Priority.MEDIUM)
-  const [title, setTitle] = useState<string>('')
+  const [todoTitle, setTodoTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [gift, setGift] = useState<string>('')
+  const [isDone, setIsDone] = useState<boolean>(false)
+  const [id, setId] = useState<number>(0)
   useEffect(() => {
     if (!draft || !!errors) {
       return
     }
+    console.log('add edit component', draft)
     setPriority(draft.priority)
-    setTitle(draft.title)
+    setTodoTitle(draft.title)
     setDescription(draft.description)
     setGift(draft.gift)
+    setIsDone(draft.isDone)
+    setId(draft.id)
   }, [draft, errors])
 
   return (
     <Modal
-      title={`Add new Todo`}
+      title={title}
       description={`Please fill the blanks`}
       open={open}
       handleClose={handleClose}
       action={
         <Button
-          onClick={() => submitTodoForm({ priority, title, description, gift })}
+          onClick={() =>
+            submitTodoForm({
+              priority,
+              title: todoTitle,
+              description,
+              gift,
+              isDone,
+              id,
+            })
+          }
           color="secondary"
           variant="contained"
         >
-          Create a new ToDo
+          Submit
         </Button>
       }
       body={
-        <>
+        <Grid container direction={'column'}>
           <FormControl fullWidth>
             <TextField
               label="Title"
+              defaultValue={todoTitle}
+              value={todoTitle}
               aria-describedby="my-helper-text"
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTodoTitle(e.target.value)}
             />
             <FormHelperText id="my-helper-text" error={!!errors?.title}>
               {errors?.title || `The Title of your task`}
@@ -63,6 +81,8 @@ const AddToDoModal = ({
           </FormControl>
           <FormControl fullWidth>
             <TextField
+              defaultValue={description}
+              value={description}
               label="Description"
               multiline
               rows={3}
@@ -75,6 +95,8 @@ const AddToDoModal = ({
           </FormControl>
           <FormControl fullWidth>
             <TextField
+              defaultValue={gift}
+              value={gift}
               label="Gift"
               aria-describedby="my-helper-text"
               onChange={(e) => setGift(e.target.value)}
@@ -109,7 +131,7 @@ const AddToDoModal = ({
               />
             </RadioGroup>
           </FormControl>
-        </>
+        </Grid>
       }
     />
   )

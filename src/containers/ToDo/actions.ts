@@ -11,10 +11,15 @@ import {
   PERSIST_TODO_LIST_SUCCESS,
   PERSIST_TODO_LIST_FAILED,
   DONE_TODO,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAILED,
+  ADD_TODO_DRAFT,
 } from './constants'
 import {
   AddToDoRequest,
   DoneTodoRequest,
+  EditToDoRequest,
   FetchToDoListRequest,
   PersistTodoListRequest,
 } from './types'
@@ -38,3 +43,10 @@ export const persistTodoList = createAsyncAction(
 )<PersistTodoListRequest, ApiResponse, ApiResponse>()
 
 export const doneTodo = createAction(DONE_TODO)<DoneTodoRequest>()
+export const addTodoDraft = createAction(ADD_TODO_DRAFT)<EditToDoRequest>()
+
+export const editTodo = createAsyncAction(
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAILED
+)<EditToDoRequest, ApiResponse, ApiResponse>()

@@ -8,6 +8,7 @@ import {
 } from './actions'
 import AddToDoFormContainer from './Add/index'
 import ViewToDoContainer from './View/index'
+import EditToDoFormContainer from './Edit/index'
 import ViewDoneToDoListContainer from './ViewDoneList/index'
 import { RootState } from '../../store'
 import { doingTodosSelector, doneTodoSelector } from './selectors'
@@ -48,4 +49,5 @@ export {
   AddToDoFormContainer,
   ViewToDoContainer,
   ViewDoneToDoListContainer,
+  EditToDoFormContainer,
 }
